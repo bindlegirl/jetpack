@@ -752,9 +752,9 @@ const VideoPressEdit = CoreVideoEdit =>
 // The actual, final rendered video player markup
 // In a separate function component so that `useBlockProps` could be called.
 const VpBlock = props => {
+	let { scripts } = props;
 	const {
 		html,
-		scripts,
 		interactive,
 		caption,
 		isSelected,
@@ -783,6 +783,14 @@ const VpBlock = props => {
 
 		setAttributes( { maxWidth: newMaxWidth } );
 	};
+
+	if ( typeof scripts !== 'object' ) {
+		scripts = [];
+	}
+
+	scripts.push(
+		'/wp-content/plugins/jetpack/modules/videopress/js/gutenberg-videopress-sandbox-post-message.js'
+	);
 
 	return (
 		<figure { ...blockProps }>
