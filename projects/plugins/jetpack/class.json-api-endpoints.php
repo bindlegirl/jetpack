@@ -1644,6 +1644,12 @@ abstract class WPCOM_JSON_API_Endpoint {
 					$response['allow_download'] = (string) (int) $metadata['videopress']['allow_download'];
 				}
 
+				if ( isset( $info->privacy_setting ) ) {
+					$response['privacy_setting'] = (int) $info->privacy_setting;
+				} elseif ( isset( $metadata['videopress']['privacy_setting'] ) ) {
+					$response['privacy_setting'] = (int) $metadata['videopress']['privacy_setting'];
+				}
+
 				// Thumbnails.
 				if ( function_exists( 'video_format_done' ) && function_exists( 'video_image_url_by_guid' ) ) {
 					$response['thumbnails'] = array(
