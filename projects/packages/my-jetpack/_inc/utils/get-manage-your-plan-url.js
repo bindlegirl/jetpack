@@ -9,14 +9,20 @@ import { getRedirectUrl } from '@automattic/jetpack-components';
 /**
  * Internal dependencies
  */
-import { MY_JETPACK_MY_PLANS_MANAGE_SOURCE } from '../constants';
+import {
+	MY_JETPACK_MY_PLANS_MANAGE_SOURCE,
+	MY_JETPACK_MY_PLANS_PURCHASE_SOURCE,
+} from '../constants';
 
 /**
  * Return the redurect URL, according to the Jetpack redurects source.
  *
- * @returns {string} the redirect URL
+ * @param  {boolean} hasPlan  - Whether the site has a plan already.
+ * @returns {string}            the redirect URL
  */
-export default function () {
+export default function ( hasPlan ) {
 	const site = window?.myJetpackInitialState?.siteSuffix;
-	return getRedirectUrl( MY_JETPACK_MY_PLANS_MANAGE_SOURCE, { site } );
+	return hasPlan
+		? getRedirectUrl( MY_JETPACK_MY_PLANS_MANAGE_SOURCE, { site } )
+		: getRedirectUrl( MY_JETPACK_MY_PLANS_PURCHASE_SOURCE, { site } );
 }
