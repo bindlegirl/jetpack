@@ -8,9 +8,9 @@
 namespace Automattic\Jetpack\Waf;
 
 /**
- * WafOperators class
+ * Waf_Operators class
  */
-class WafOperators {
+class Waf_Operators {
 	/**
 	 * Returns true if the test string is found at the beginning of the input.
 	 *
@@ -163,7 +163,8 @@ class WafOperators {
 		return isset( $results[0] )
 		? array_map(
 			function ( $r ) {
-				return $r[1]; },
+				return $r[1];
+			},
 			$results
 		)
 		: false;

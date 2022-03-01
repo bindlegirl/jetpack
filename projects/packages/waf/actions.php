@@ -12,20 +12,11 @@ if ( ! function_exists( 'add_action' ) ) {
 	return;
 }
 
-/**
- * Determines if the passed $option is one of the allowed WAF operation modes.
- *
- * @param  string $option The mode option.
- * @return bool
- */
-function is_allowed_mode( $option ) {
-	$allowed_modes = array(
-		'normal',
-		'silent',
-	);
+define( 'JETPACK_WAF_VERSION', '1.0.0' );
+define( 'JETPACK_WAF_DIR', __DIR__ );
 
-	return in_array( $option, $allowed_modes, true );
-}
+register_activation_hook( JETPACK__PLUGIN_FILE, array( __NAMESPACE__ . '\Waf', 'activate' ) );
+add_action( 'admin_init', array( __NAMESPACE__ . '\Waf', 'update' ) );
 
 /**
  * Runs the WAF in the WP context.
@@ -35,11 +26,10 @@ function is_allowed_mode( $option ) {
 add_action(
 	'plugin_loaded',
 	function () {
-
 		if ( ! defined( 'JETPACK_WAF_MODE' ) ) {
 			$mode_option = get_option( 'jetpack_waf_mode' );
 
-			if ( ! is_allowed_mode( $mode_option ) ) {
+			if ( ! Waf::is_allowed_mode( $mode_option ) ) {
 				return;
 			}
 
@@ -50,8 +40,8 @@ add_action(
 			return;
 		}
 
-		if ( ! WafRunner::did_run() ) {
-			WafRunner::run();
+		if ( ! Waf::did_run() ) {
+			Waf::run();
 		}
 	}
 );

@@ -16,7 +16,7 @@ namespace Automattic\Jetpack\Waf;
 /**
  * WafRuntime class
  */
-class WafRuntime {
+class Waf_Runtime {
 
 	/**
 	 * Last rule.

@@ -8,9 +8,9 @@
 namespace Automattic\Jetpack\Waf;
 
 /**
- * WafRuntime class
+ * Waf_Rule_Compiler class
  */
-class WafRuleCompiler {
+class Waf_Rule_Compiler {
 	/**
 	 * Maybe will change.
 	 *
