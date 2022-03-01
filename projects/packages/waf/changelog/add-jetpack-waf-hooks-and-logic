@@ -1,0 +1,4 @@
+Significance: minor
+Type: added
+
+Added activation and upgrade hooks, and moved logic into a central class
