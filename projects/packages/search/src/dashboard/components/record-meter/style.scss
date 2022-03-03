@@ -34,3 +34,17 @@
     text-overflow: ellipsis;
     display:inherit;
   }
+
+  .notice-box {
+    border: solid .5px lightgrey;
+    margin-left: 5px;
+    padding: 0 5px;
+  
+  }
+  
+  .notice-box__red {
+    border: solid .5px red;
+    color: red;
+    margin-left: 5px;
+    padding: 0px 5px;
+  }
