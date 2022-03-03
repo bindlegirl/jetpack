@@ -13,6 +13,7 @@ import { useSelect } from '@wordpress/data';
  */
 import { STORE_ID } from 'store';
 import { BarChart } from './bar-chart';
+import { NoticeBox } from './notice-box';
 import getRecordInfo from './lib/record-info';
 import createData from './lib/create-data';
 
@@ -39,6 +40,34 @@ export default function RecordMeter() {
 					{ tierMaximumRecords && (
 						<p>
 							<BarChart data={ recordInfo.data } isValid={ recordInfo.isValid } />
+							<NoticeBox
+								recordCount={ recordInfo.recordCount }
+								planRecordLimit={ tierMaximumRecords }
+								hasBeenIndexed={ recordInfo.hasBeenIndexed }
+								hasValidData={ recordInfo.hasValidData }
+								hasItems={ recordInfo.hasItems }
+							></NoticeBox>
+							Tier maximum records: <strong>{ tierMaximumRecords }</strong>
+						</p>
+					) }
+					{ postCount && (
+						<p>
+							Post count: <strong>{ postCount }</strong>
+						</p>
+					) }
+					{ postTypeBreakdown && (
+						<p>
+							Post type breakdown:
+							<table>
+								{ Object.entries( postTypeBreakdown ).map( postType => (
+									<tr>
+										<td>{ postType[ 0 ] }</td>
+										<td>
+											<strong>{ postType[ 1 ] }</strong>
+										</td>
+									</tr>
+								) ) }
+							</table>
 						</p>
 					) }
 				</div>
