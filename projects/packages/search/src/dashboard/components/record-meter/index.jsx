@@ -7,6 +7,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BarChart } from './bar-chart';
+import { RecordCount } from './record-count';
 import getRecordInfo from './lib/record-info';
 import createData from './lib/create-data';
 
@@ -35,6 +36,10 @@ export default function RecordMeter( { postCount, postTypeBreakdown, tierMaximum
 					<h2>{ __( 'Your search records', 'jetpack-search-pkg' ) }</h2>
 					{ tierMaximumRecords && (
 						<p>
+							<RecordCount
+								recordCount={ recordInfo.recordCount }
+								planRecordLimit={ tierMaximumRecords }
+							/>
 							<BarChart data={ recordInfo.data } isValid={ recordInfo.isValid } />
 							Tier maximum records: <strong>{ tierMaximumRecords }</strong>
 						</p>
