@@ -3913,6 +3913,23 @@ p {
 			return new WP_Error( 'unknown_token', 'Unknown Jetpack token', 403 );
 		}
 
+		/**
+		 * Optionally block uploads processed through Jetpack's upload_handler().
+		 * The filter may return false or WP_Error to block this particular upload.
+		 *
+		 * @since 10.8
+		 *
+		 * @param bool|WP_Error $allowed If false or WP_Error, block the upload. If true, allow the upload.
+		 * @param mixed $_FILES The $_FILES attempting to be uploaded.
+		 */
+		$can_upload = apply_filters( 'jetpack_upload_handler_can_upload', true, $_FILES );
+		if ( ! $can_upload || is_wp_error( $can_upload ) ) {
+			if ( is_wp_error( $can_upload ) ) {
+				return $can_upload;
+			}
+			return new WP_Error( 'handler_cannot_upload', __( 'The upload handler cannot upload files', 'jetpack' ), 400 );
+		}
+
 		$uploaded_files = array();
 		$global_post    = isset( $GLOBALS['post'] ) ? $GLOBALS['post'] : null;
 		unset( $GLOBALS['post'] );
@@ -4101,20 +4118,17 @@ p {
 	 * @return array
 	 */
 	public function plugin_action_links( $actions ) {
-
-		$jetpack_home = array( 'jetpack-home' => sprintf( '<a href="%s">%s</a>', self::admin_url( 'page=jetpack' ), __( 'My Jetpack', 'jetpack' ) ) );
 		$support_link = ( new Host() )->is_woa_site() ? 'https://wordpress.com/help/contact/' : self::admin_url( 'page=jetpack-debugger' );
 
 		if ( current_user_can( 'jetpack_manage_modules' ) && ( self::is_connection_ready() || ( new Status() )->is_offline_mode() ) ) {
 			return array_merge(
-				$jetpack_home,
 				array( 'settings' => sprintf( '<a href="%s">%s</a>', self::admin_url( 'page=jetpack#/settings' ), __( 'Settings', 'jetpack' ) ) ),
 				array( 'support' => sprintf( '<a href="%s">%s</a>', $support_link, __( 'Support', 'jetpack' ) ) ),
 				$actions
 			);
 		}
 
-		return array_merge( $jetpack_home, $actions );
+		return $actions;
 	}
 
 	/**
