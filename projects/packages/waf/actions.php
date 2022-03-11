@@ -15,9 +15,6 @@ if ( ! function_exists( 'add_action' ) ) {
 define( 'JETPACK_WAF_VERSION', '1.0.0' );
 define( 'JETPACK_WAF_DIR', __DIR__ );
 
-register_activation_hook( JETPACK__PLUGIN_FILE, array( __NAMESPACE__ . '\Waf', 'activate' ) );
-add_action( 'admin_init', array( __NAMESPACE__ . '\Waf', 'update' ) );
-
 /**
  * Runs the WAF in the WP context.
  *
