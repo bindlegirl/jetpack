@@ -118,7 +118,6 @@ class Initializer {
 					'items' => array(),
 				),
 				'redirectUrl'           => admin_url( 'admin.php?page=my-jetpack' ),
-				'topJetpackMenuItemUrl' => Admin_Menu::get_top_level_menu_item_url(),
 				'siteSuffix'            => ( new Status() )->get_site_suffix(),
 				'myJetpackVersion'      => self::PACKAGE_VERSION,
 				'fileSystemWriteAccess' => self::has_file_system_write_access(),
@@ -226,14 +225,7 @@ class Initializer {
 		 *
 		 * @param bool $shoud_initialize Should we initialize My Jetpack?
 		 */
-		$should = apply_filters( 'jetpack_my_jetpack_should_initialize', true );
-
-		// Do not initialize My Jetpack if site is not connected.
-		if ( ! ( new Connection_Manager() )->is_connected() ) {
-			return false;
-		}
-
-		return $should;
+		return apply_filters( 'jetpack_my_jetpack_should_initialize', true );
 	}
 
 	/**
